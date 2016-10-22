@@ -4,7 +4,7 @@ Vagrant.configure('2') do |config|
     config.memory = '2048'
   end
   Dir['bin/*.sh'].sort.each do |path|
-    config.vm.provision 'shell', path: path, privileged: false
+    config.vm.provision 'shell', path: path, privileged: false, keep_color: true
   end
 end
 # vim: ft=ruby
