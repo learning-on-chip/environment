@@ -1,5 +1,7 @@
 # Environment
 
+The repository provides a development environment.
+
 ## Contribution
 
 1. Fork the project.
