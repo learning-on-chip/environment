@@ -35,6 +35,8 @@ Vagrant.configure('2') do |config|
   SOFTWARE_ROOT = '~/software'
   GIT_URL = 'https://github.com/git/git.git'
   VIM_URL = 'https://github.com/vim/vim.git'
+  REDIS_VERSION = '3.2.4'
+  REDIS_URL = "http://download.redis.io/releases/redis-#{REDIS_VERSION}.tar.gz"
   config.vm.provision 'shell', privileged: false, inline: <<-SHELL
     mkdir -p #{SOFTWARE_ROOT}
 
@@ -51,6 +53,13 @@ Vagrant.configure('2') do |config|
     sudo make install
     git clone https://github.com/IvanUkhov/.vim.git ~/.vim --recursive
     make -C ~/.vim
+
+    cd #{SOFTWARE_ROOT}
+    curl -LO #{REDIS_URL}
+    tar -xzf redis-#{REDIS_VERSION}.tar.gz
+    cd redis-#{REDIS_VERSION}
+    make
+    sudo make PREFIX=/usr/local install
   SHELL
 
   SIMULATION_ROOT = '~/simulation'
