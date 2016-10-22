@@ -39,4 +39,6 @@ make
 git clone ${BENCHMARKS_URL} ${SIMULATION_ROOT}/benchmarks
 cd ${SIMULATION_ROOT}/benchmarks
 sed -i.bak "/\\$(join '\|' ${BENCHMARKS_EXCLUDE})\\)/d" Makefile
+make -C parsec parsec-2.1/.parsec_source
+sed -i.bak 's/all install_docs install_sw/all install_sw' parsec/parsec-2.1/pkgs/libs/ssl/src/Makefile.org
 make
