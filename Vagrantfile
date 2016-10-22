@@ -30,6 +30,8 @@ Vagrant.configure('2') do |config|
   config.vm.provision 'shell', inline: <<-SHELL
     apt-get update
     apt-get install -y #{PACKAGES.join(' ')}
+    ln -s /usr/bin/gfortran-#{GCC_VERSION} /usr/bin/f95
+    ln -s /usr/bin/gfortran-#{GCC_VERSION} /usr/bin/gfortran
   SHELL
 
   SOFTWARE_ROOT = '~/software'
