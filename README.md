@@ -6,7 +6,6 @@ The repository provides a development environment.
 
 ```bash
 vagrant up
-vagrant ssh
 ```
 
 ## Contribution
