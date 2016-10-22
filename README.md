@@ -2,6 +2,13 @@
 
 The repository provides a development environment.
 
+## Installation
+
+```bash
+vagrant up
+vagrant ssh
+```
+
 ## Contribution
 
 1. Fork the project.
