@@ -1,0 +1,42 @@
+#!/bin/bash
+
+set -e
+
+function join() {
+    local delimiter="${1}"
+    shift
+    echo -n "${1}"
+    shift
+    printf "%s" "${@/#/${delimiter}}"
+}
+
+SIMULATION_ROOT="${HOME}/simulation"
+PIN_VERSION='2.14-71313-gcc.4.4.7-linux'
+PIN_URL="http://software.intel.com/sites/landingpage/pintool/downloads/pin-${PIN_VERSION}.tar.gz"
+SNIPER_URL='http://snipersim.org/download/b8df51129affee69/git/sniper.git'
+SNIPER_VERSION='dbeda5af99d444fe2198dab4c5efa60dd0275b16'
+BENCHMARKS_URL='http://snipersim.org/git/benchmarks.git'
+BENCHMARKS_EXCLUDE='cpu2006 npb splash2'
+
+echo "export PIN_HOME=${SIMULATION_ROOT}/pin" >> ~/.bash_profile
+echo "export SNIPER_ROOT=${SIMULATION_ROOT}/sniper" >> ~/.bash_profile
+echo "export BENCHMARKS_ROOT=${SIMULATION_ROOT}/benchmarks" >> ~/.bash_profile
+
+source ~/.bash_profile
+
+mkdir -p ${SIMULATION_ROOT}
+
+cd ${SIMULATION_ROOT}
+curl -LO ${PIN_URL}
+tar -xzf pin-${PIN_VERSION}.tar.gz
+ln -s pin-${PIN_VERSION} pin
+
+git clone ${SNIPER_URL} ${SIMULATION_ROOT}/sniper
+cd ${SIMULATION_ROOT}/sniper
+git reset --hard ${SNIPER_VERSION}
+make
+
+git clone ${BENCHMARKS_URL} ${SIMULATION_ROOT}/benchmarks
+cd ${SIMULATION_ROOT}/benchmarks
+sed -i.bak "/\\$(join '\|' ${BENCHMARKS_EXCLUDE})\\)/d" Makefile
+make
