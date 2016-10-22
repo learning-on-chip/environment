@@ -21,6 +21,7 @@ BENCHMARKS_EXCLUDE='cpu2006 npb splash2'
 echo "export PIN_HOME=${SIMULATION_ROOT}/pin" >> ~/.bash_profile
 echo "export SNIPER_ROOT=${SIMULATION_ROOT}/sniper" >> ~/.bash_profile
 echo "export BENCHMARKS_ROOT=${SIMULATION_ROOT}/benchmarks" >> ~/.bash_profile
+echo 'export NO_PYTHON_DOWNLOAD=1' >> .bash_profile
 
 source ~/.bash_profile
 
@@ -34,11 +35,20 @@ ln -s pin-${PIN_VERSION} pin
 git clone ${SNIPER_URL} ${SIMULATION_ROOT}/sniper
 cd ${SIMULATION_ROOT}/sniper
 git reset --hard ${SNIPER_VERSION}
+sed -i.bak 's/ia32 intel64/intel64/' tools/makepythondist.sh
+sed -i.bak 's/curl http/curl -L http/' tools/makepythondist.sh
+sed -i.bak 's/ --without-signal-module//' tools/makepythondist.sh
+sed -i.bak '/Delete all .py for which a .pyc exists/d' tools/makepythondist.sh
+tools/makepythondist.sh
+tar -xzf sniper-python27-intel64.tgz
+mv python_kit intel64
+mkdir python_kit
+mv intel64 python_kit/
 make
 
 git clone ${BENCHMARKS_URL} ${SIMULATION_ROOT}/benchmarks
 cd ${SIMULATION_ROOT}/benchmarks
 sed -i.bak "/\\$(join '\|' ${BENCHMARKS_EXCLUDE})\\)/d" Makefile
 make -C parsec parsec-2.1/.parsec_source
-sed -i.bak 's/all install_docs install_sw/all install_sw' parsec/parsec-2.1/pkgs/libs/ssl/src/Makefile.org
+sed -i.bak 's/all install_docs install_sw/all install_sw/' parsec/parsec-2.1/pkgs/libs/ssl/src/Makefile.org
 make
