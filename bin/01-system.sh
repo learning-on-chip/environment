@@ -4,7 +4,9 @@ set -e
 
 GCC_VERSION='4.8'
 PACKAGES=(
+    bison
     build-essential
+    flex
     g++-${GCC_VERSION}-multilib
     gettext
     gfortran-${GCC_VERSION}
