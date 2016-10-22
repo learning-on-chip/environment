@@ -71,10 +71,10 @@ Vagrant.configure('2') do |config|
     echo 'export BENCHMARKS_ROOT=#{SIMULATION_ROOT}/benchmarks' >> ~/.bash_profile
   SHELL
 
-  PIN_BASENAME = 'pin-2.14-71313-gcc.4.4.7-linux'
-  PIN_URL = "http://software.intel.com/sites/landingpage/pintool/downloads/#{PIN_BASENAME}.tar.gz"
+  PIN_VERSION = '2.14-71313-gcc.4.4.7-linux'
+  PIN_URL = "http://software.intel.com/sites/landingpage/pintool/downloads/pin-#{PIN_VERSION}.tar.gz"
   SNIPER_URL = 'http://snipersim.org/download/b8df51129affee69/git/sniper.git'
-  SNIPER_COMMIT = 'dbeda5af99d444fe2198dab4c5efa60dd0275b16'
+  SNIPER_VERSION = 'dbeda5af99d444fe2198dab4c5efa60dd0275b16'
   BENCHMARKS_URL = 'http://snipersim.org/git/benchmarks.git'
   BENCHMARKS_EXCLUDE = %w(cpu2006 npb splash2)
   config.vm.provision 'shell', privileged: false, inline: <<-SHELL
@@ -82,12 +82,12 @@ Vagrant.configure('2') do |config|
 
     cd #{SIMULATION_ROOT}
     curl -LO #{PIN_URL}
-    tar -xzf #{PIN_BASENAME}.tar.gz
-    mv #{PIN_BASENAME} pin
+    tar -xzf pin-#{PIN_VERSION}.tar.gz
+    ln -s pin-#{PIN_VERSION} pin
 
     git clone #{SNIPER_URL} #{SIMULATION_ROOT}/sniper
     cd #{SIMULATION_ROOT}/sniper
-    git reset --hard #{SNIPER_COMMIT}
+    git reset --hard #{SNIPER_VERSION}
     make
 
     git clone #{BENCHMARKS_URL} #{SIMULATION_ROOT}/benchmarks
