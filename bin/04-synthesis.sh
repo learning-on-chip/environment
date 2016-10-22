@@ -9,5 +9,5 @@ curl -sSf ${RUSTUP_URL} | sudo sh
 
 mkdir -p ${CODE_ROOT}
 
-git clone https://github.com/learning-on-chip/studio.git ${CODE_ROOT}/studio
+git clone https://github.com/learning-on-chip/studio.git ${CODE_ROOT}/studio --recursive
 make -C ${CODE_ROOT}/studio install
