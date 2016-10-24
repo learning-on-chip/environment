@@ -25,16 +25,16 @@ echo 'export NO_PYTHON_DOWNLOAD=1' >> .bash_profile
 
 source ~/.bash_profile
 
-mkdir -p ${SIMULATION_ROOT}
+mkdir -p "${SIMULATION_ROOT}"
 
-cd ${SIMULATION_ROOT}
-curl -LO ${PIN_URL}
-tar -xzf pin-${PIN_VERSION}.tar.gz
-ln -s pin-${PIN_VERSION} pin
+cd "${SIMULATION_ROOT}"
+curl -LO "${PIN_URL}"
+tar -xzf "pin-${PIN_VERSION}.tar.gz"
+ln -s "pin-${PIN_VERSION}" pin
 
-git clone ${SNIPER_URL} ${SIMULATION_ROOT}/sniper
-cd ${SIMULATION_ROOT}/sniper
-git reset --hard ${SNIPER_VERSION}
+git clone "${SNIPER_URL}" "${SIMULATION_ROOT}/sniper"
+cd "${SIMULATION_ROOT}/sniper"
+git reset --hard "${SNIPER_VERSION}"
 sed -i.bak 's/ia32 intel64/intel64/' tools/makepythondist.sh
 sed -i.bak 's/curl http/curl -L http/' tools/makepythondist.sh
 sed -i.bak 's/ --without-signal-module//' tools/makepythondist.sh
@@ -46,8 +46,8 @@ mkdir python_kit
 mv intel64 python_kit/
 make
 
-git clone ${BENCHMARKS_URL} ${SIMULATION_ROOT}/benchmarks
-cd ${SIMULATION_ROOT}/benchmarks
+git clone "${BENCHMARKS_URL}" "${SIMULATION_ROOT}/benchmarks"
+cd "${SIMULATION_ROOT}/benchmarks"
 sed -i.bak "/\\($(join '\|' ${BENCHMARKS_EXCLUDE})\\)/d" Makefile
 make -C parsec parsec-2.1/.parsec_source
 sed -i.bak 's/all install_docs install_sw/all install_sw/' parsec/parsec-2.1/pkgs/libs/ssl/src/Makefile.org
