@@ -18,9 +18,9 @@ SNIPER_VERSION='dbeda5af99d444fe2198dab4c5efa60dd0275b16'
 BENCHMARKS_URL='http://snipersim.org/git/benchmarks.git'
 BENCHMARKS_EXCLUDE='cpu2006 npb splash2'
 
-echo "export PIN_HOME=${SIMULATION_ROOT}/pin" >> ~/.bash_profile
-echo "export SNIPER_ROOT=${SIMULATION_ROOT}/sniper" >> ~/.bash_profile
-echo "export BENCHMARKS_ROOT=${SIMULATION_ROOT}/benchmarks" >> ~/.bash_profile
+echo "export PIN_HOME='${SIMULATION_ROOT}/pin'" >> ~/.bash_profile
+echo "export SNIPER_ROOT='${SIMULATION_ROOT}/sniper'" >> ~/.bash_profile
+echo "export BENCHMARKS_ROOT='${SIMULATION_ROOT}/benchmarks'" >> ~/.bash_profile
 echo 'export NO_PYTHON_DOWNLOAD=1' >> .bash_profile
 
 source ~/.bash_profile

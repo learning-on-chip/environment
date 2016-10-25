@@ -10,8 +10,6 @@ REDIS_URL="http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz"
 DOTDEVELOP_URL='https://github.com/IvanUkhov/.develop.git'
 DOTVIM_URL='https://github.com/IvanUkhov/.vim.git'
 
-mkdir -p "${SOFTWARE_ROOT}"
-
 git clone "${GIT_URL}" "${SOFTWARE_ROOT}/git"
 cd "${SOFTWARE_ROOT}/git"
 make prefix=/usr/local
